@@ -77,6 +77,7 @@ class Version(models.Model):
         verbose_name = _('version')
         verbose_name_plural = _('versions')
         ordering = ('-publish_at',)
+        get_latest_by = 'publish_at'
 
     def __str__(self):
         return self.title
