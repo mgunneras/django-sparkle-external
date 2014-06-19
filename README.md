@@ -1,3 +1,15 @@
+# django-sparkle-external
+
+Django-sparkle-external is a spin-off version of django-sparkle-1.5 to provide Sparkle updates with external file sources.
+
+I serve my app site with [Heroku](https://www.heroku.com), on which it is absolutely painful to enable media file uploads for Django. I changed the file source to a `URLField` so that I can serve my updates with [GitHub](https://github.com) Downloads instead. Some other hooks provided by django-sparkle-1.5 had also been removed since they won’t work on Heroku.
+
+I also used [Django Ghostdown](https://github.com/uranusjr/django-ghostdown) to provide a better text field for release notes. One benefit (?) of this is that this project does not depend on `Markdown` anymore, but you can use any Markdown rendering library as you wish. See description of Django Ghostdown for more information on the setup.
+
+The original README of django-sparkle-1.5 follows.
+
+
+
 # django-sparkle-1.5
 
 Django-sparkle-1.5 is a Django application to make it easy to publish updates for your mac application using [sparkle](http://sparkle.andymatuschak.org/).
@@ -14,7 +26,7 @@ This version of django-sparkle is intended for use with Django 1.5 and has some 
 
 ## optional requirements
 
-* OpenSSL (if you want to have releases signed)  
+* OpenSSL (if you want to have releases signed)
 This must be available on the command line as the `openssl` command.
 
 
@@ -44,9 +56,9 @@ If you want to enable system profiling, be sure to set the `SUEnableSystemProfil
 
 # Settings
 
-* `SPARKLE_PRIVATE_KEY_PATH`  
+* `SPARKLE_PRIVATE_KEY_PATH`
    The path to your DSA private key for signing releases.  Defaults to `None`.  If not provided, releases will not be automatically signed when uploaded.
-* `SPARKLE_UPLOAD_PREFIX`  
+* `SPARKLE_UPLOAD_PREFIX`
 The path prefix that will be added to your uploaded files. Defaults to `sparkle/`. Use this to configure the upload directory in which your release files will end. Note that this prefix will become part of the download URL. Remember to end this with a `/` if you want a directory.
 
 
@@ -58,8 +70,8 @@ The path prefix that will be added to your uploaded files. Defaults to `sparkle/
 
 This software is licensed under the terms of the BSD license:
 
-Copyright (c) 2011, Jason Emerick  
-Copyright (c) 2013, Johannes Spielmann  
+Copyright (c) 2011, Jason Emerick
+Copyright (c) 2013, Johannes Spielmann
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

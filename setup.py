@@ -30,7 +30,6 @@ setup(
     },
     install_requires=[
         'django-absolute',
-        'Markdown>2.1',
         'django-ghostdown>=0.3.1',
     ],
     classifiers=[
