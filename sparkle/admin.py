@@ -1,48 +1,27 @@
 from django.contrib import admin
-from sparkle.models import (
+from .conf import SYSTEM_PROFILES_VISIBLE
+from .models import (
     Application, Version, SystemProfileReport, SystemProfileReportRecord,
 )
-from sparkle.conf import SYSTEM_PROFILES_VISIBLE
+from .forms import VersionAdminForm
 
 
 class ApplicationAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('name',),
-        'filename_slug': ('name',),
     }
-    list_display = ('name', 'slug', 'filename_slug')
+    list_display = ('name', 'slug',)
     list_display_links = list_display
 
 
 class VersionAdmin(admin.ModelAdmin):
+    form = VersionAdminForm
     list_display = (
-        'title', 'version', 'short_version', 'application', 'publish_date',
+        'title', 'version', 'short_version', 'application', 'publish_at',
     )
-    list_display_links = list_display
-    list_filter = ('application', 'publish_date',)
-    fieldsets = (
-        (
-            None,
-            {
-                'fields': (
-                    'application', 'title', 'release_notes', 'version',
-                    'short_version', 'update', 'publish_date',
-                )
-            }
-        ),
-        (
-            'Details',
-            {
-                'fields': (
-                    'dsa_signature', 'length', 'minimum_system_version',
-                    'created',
-                ),
-                'classes': ('collapse',)
-            }
-        ),
-    )
-    readonly_fields = ('created',)
-    ordering = ('-publish_date',)
+    list_display_links = ('title',)
+    list_filter = ('application', 'publish_at',)
+    readonly_fields = ('created_at',)
 
 
 admin.site.register(Application, ApplicationAdmin)

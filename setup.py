@@ -10,7 +10,7 @@ README = read('README.md')
 
 
 setup(
-    name='django-sparkle-1.5',
+    name='django-sparkle-external',
     version=sparkle.__version__,
     description=(
         'Django-sparkle is a Django application to make it easy to publish '
@@ -31,6 +31,7 @@ setup(
     install_requires=[
         'django-absolute',
         'Markdown>2.1',
+        'django-ghostdown>=0.3.1',
     ],
     classifiers=[
         'Environment :: Web Environment',
