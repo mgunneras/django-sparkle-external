@@ -4,6 +4,7 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from ghostdown.models.fields import GhostdownField
+from .managers import VersionManager
 
 
 @python_2_unicode_compatible
@@ -25,7 +26,7 @@ class Application(models.Model):
         return self.name
 
     def active_versions(self):
-        return self.versions.filter(publish_at__lte=now())
+        return self.versions.active()
 
 
 @python_2_unicode_compatible
@@ -72,6 +73,8 @@ class Version(models.Model):
         default=now, verbose_name=_('published at'),
         help_text=('When this upate will be (automatically) published.'),
     )
+
+    objects = VersionManager()
 
     class Meta:
         verbose_name = _('version')
