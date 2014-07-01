@@ -17,6 +17,9 @@ class Application(models.Model):
     slug = models.SlugField(
         max_length=50, unique=True, verbose_name=_('slug'),
     )
+    default_channel = models.ForeignKey(
+        'Channel', verbose_name=_('default channel'), null=True,
+    )
 
     class Meta:
         verbose_name = _('application')
@@ -25,8 +28,32 @@ class Application(models.Model):
     def __str__(self):
         return self.name
 
-    def active_versions(self):
-        return self.versions.active()
+    def active_versions(self, channel=None):
+        if channel is None:
+            channel = self.default_channel
+        return self.versions.active(channel=channel)
+
+
+@python_2_unicode_compatible
+class Channel(models.Model):
+    """Possible channels in which a version belongs to."""
+
+    name = models.CharField(
+        max_length=50, verbose_name=_('name'),
+    )
+    slug = models.SlugField(
+        max_length=50, unique=True, verbose_name=_('slug'),
+    )
+
+    class Meta:
+        verbose_name = _('channel')
+        verbose_name_plural = _('channels')
+
+    def __str__(self):
+        return self.name
+
+    def active_versions(self, application):
+        return application.active_versions(channel=self)
 
 
 @python_2_unicode_compatible
@@ -35,6 +62,9 @@ class Version(models.Model):
 
     application = models.ForeignKey(
         'Application', related_name='versions', verbose_name=_('application'),
+    )
+    channels = models.ManyToManyField(
+        'Channel', related_name='versions', verbose_name=_('channels'),
     )
     title = models.CharField(
         max_length=100, verbose_name=_('title'),
@@ -80,7 +110,7 @@ class Version(models.Model):
         verbose_name = _('version')
         verbose_name_plural = _('versions')
         ordering = ('-publish_at',)
-        get_latest_by = 'publish_at'
+        get_latest_by = 'version'
 
     def __str__(self):
         return self.title

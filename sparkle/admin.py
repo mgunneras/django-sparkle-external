@@ -1,12 +1,21 @@
 from django.contrib import admin
 from .conf import SYSTEM_PROFILES_VISIBLE
 from .models import (
-    Application, Version, SystemProfileReport, SystemProfileReportRecord,
+    Application, Channel, Version, SystemProfileReport,
+    SystemProfileReportRecord,
 )
 from .forms import VersionAdminForm
 
 
 class ApplicationAdmin(admin.ModelAdmin):
+    prepopulated_fields = {
+        'slug': ('name',),
+    }
+    list_display = ('name', 'slug',)
+    list_display_links = list_display
+
+
+class ChannelAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('name',),
     }
@@ -21,10 +30,12 @@ class VersionAdmin(admin.ModelAdmin):
     )
     list_display_links = ('title',)
     list_filter = ('application', 'publish_at',)
+    filter_horizontal = ('channels',)
     readonly_fields = ('created_at',)
 
 
 admin.site.register(Application, ApplicationAdmin)
+admin.site.register(Channel, ChannelAdmin)
 admin.site.register(Version, VersionAdmin)
 
 
