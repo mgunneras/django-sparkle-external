@@ -62,7 +62,6 @@ class Migration(migrations.Migration):
                 ('update_url', models.URLField(verbose_name='update URL')),
                 ('created_at', models.DateTimeField(verbose_name='created at', auto_now_add=True)),
                 ('publish_at', models.DateTimeField(default=django.utils.timezone.now, verbose_name='published at', help_text='When this upate will be (automatically) published.')),
-                ('_release_notes_rendered', models.TextField(editable=False, blank=True)),
                 ('application', models.ForeignKey(to='sparkle.Application', verbose_name='application')),
             ],
             options={
